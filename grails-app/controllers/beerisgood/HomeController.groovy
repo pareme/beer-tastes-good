@@ -2,5 +2,7 @@ package beerisgood
 
 class HomeController {
 
-    def index() { }
+    static defaultAction = "homePage"
+
+    def homePage() {}
 }

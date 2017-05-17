@@ -13,7 +13,7 @@ class AddressSpec extends Specification {
     void 'Test valid address'() {
         when: 'the street address is neither null nor blank'
         address = new Address(streetAddress: "fill", city: "fill",
-                state: "VA", zipCode: "23226")
+                state: "VA", zipCode: "23226", brewery: new Brewery(name: "fill"))
 
         then: 'the validation should fail'
         address.validate()

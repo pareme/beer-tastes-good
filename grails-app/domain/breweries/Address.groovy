@@ -5,6 +5,7 @@ class Address {
     String city
     String state
     String zipCode
+    Brewery brewery
 
     static constraints = {
         streetAddress blank: false
