@@ -1,8 +1,18 @@
 package beerisgood
 
+import breweries.Brewery
+
 class HomeController {
 
-    static defaultAction = "homePage"
+    def index() {
+        respond([name: session.name ?: 'User', breweryTotal: Brewery.count()])
+    }
 
-    def homePage() {}
+    def updateName(String name) {
+        session.name = name
+
+        flash.message = "Name has been updated"
+
+        redirect action: 'index'
+    }
 }

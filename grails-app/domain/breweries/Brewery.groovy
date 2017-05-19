@@ -9,6 +9,5 @@ class Brewery {
 
     static constraints = {
         name blank: false, unique: true
-        address unique: true
     }
 }
