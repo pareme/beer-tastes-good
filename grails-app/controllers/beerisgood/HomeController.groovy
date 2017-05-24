@@ -5,7 +5,7 @@ import breweries.Brewery
 class HomeController {
 
     def index() {
-        respond([name: session.name ?: 'User', breweryTotal: Brewery.count()])
+        respond([name: session.name ?: 'User', breweryTotal: Brewery.count(), breweryList: Brewery.list()])
     }
 
     def updateName(String name) {
