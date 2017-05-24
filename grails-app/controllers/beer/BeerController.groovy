@@ -1,4 +1,4 @@
-package breweries
+package beer
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional

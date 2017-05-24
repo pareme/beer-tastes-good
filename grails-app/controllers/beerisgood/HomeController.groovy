@@ -1,6 +1,6 @@
 package beerisgood
 
-import breweries.Brewery
+import locations.Brewery
 
 class HomeController {
 

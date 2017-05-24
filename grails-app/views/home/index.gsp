@@ -13,7 +13,7 @@
             <div class="message" role="status">${flash.message}</div>
         </g:if>
 
-        <p>There are ${breweryTotal} breweries in the database.</p>
+        <p>There are ${breweryTotal} beer in the database.</p>
 
         <ul>
             <g:each in="${breweryList}" var="brewery">

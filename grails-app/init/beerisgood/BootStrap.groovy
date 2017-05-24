@@ -1,8 +1,8 @@
-package firstgrailsapp
+package beerisgood
 
-import breweries.Address
-import breweries.Beer
-import breweries.Brewery
+import locations.Address
+import beer.Beer
+import locations.Brewery
 
 class BootStrap {
 

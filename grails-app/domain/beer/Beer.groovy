@@ -1,4 +1,6 @@
-package breweries
+package beer
+
+import locations.Brewery
 
 class Beer {
     String name

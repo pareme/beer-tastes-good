@@ -1,11 +1,11 @@
-package breweries
+package beer
 
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(BreweryController)
-@Mock(Brewery)
-class BreweryControllerSpec extends Specification {
+@TestFor(BeerController)
+@Mock(Beer)
+class BeerControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -21,8 +21,8 @@ class BreweryControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.breweryList
-            model.breweryCount == 0
+            !model.beerList
+            model.beerCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -30,7 +30,7 @@ class BreweryControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.brewery!= null
+            model.beer!= null
     }
 
     void "Test the save action correctly persists an instance"() {
@@ -38,25 +38,25 @@ class BreweryControllerSpec extends Specification {
         when:"The save action is executed with an invalid instance"
             request.contentType = FORM_CONTENT_TYPE
             request.method = 'POST'
-            def brewery = new Brewery()
-            brewery.validate()
-            controller.save(brewery)
+            def beer = new Beer()
+            beer.validate()
+            controller.save(beer)
 
         then:"The create view is rendered again with the correct model"
-            model.brewery!= null
+            model.beer!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            brewery = new Brewery(params)
+            beer = new Beer(params)
 
-            controller.save(brewery)
+            controller.save(beer)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/brewery/show/1'
+            response.redirectedUrl == '/beer/show/1'
             controller.flash.message != null
-            Brewery.count() == 1
+            Beer.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -68,11 +68,11 @@ class BreweryControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def brewery = new Brewery(params)
-            controller.show(brewery)
+            def beer = new Beer(params)
+            controller.show(beer)
 
         then:"A model is populated containing the domain instance"
-            model.brewery == brewery
+            model.beer == beer
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -84,11 +84,11 @@ class BreweryControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def brewery = new Brewery(params)
-            controller.edit(brewery)
+            def beer = new Beer(params)
+            controller.edit(beer)
 
         then:"A model is populated containing the domain instance"
-            model.brewery == brewery
+            model.beer == beer
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -98,28 +98,28 @@ class BreweryControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/brewery/index'
+            response.redirectedUrl == '/beer/index'
             flash.message != null
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def brewery = new Brewery()
-            brewery.validate()
-            controller.update(brewery)
+            def beer = new Beer()
+            beer.validate()
+            controller.update(beer)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.brewery == brewery
+            model.beer == beer
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            brewery = new Brewery(params).save(flush: true)
-            controller.update(brewery)
+            beer = new Beer(params).save(flush: true)
+            controller.update(beer)
 
         then:"A redirect is issued to the show action"
-            brewery != null
-            response.redirectedUrl == "/brewery/show/$brewery.id"
+            beer != null
+            response.redirectedUrl == "/beer/show/$beer.id"
             flash.message != null
     }
 
@@ -130,23 +130,23 @@ class BreweryControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/brewery/index'
+            response.redirectedUrl == '/beer/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def brewery = new Brewery(params).save(flush: true)
+            def beer = new Beer(params).save(flush: true)
 
         then:"It exists"
-            Brewery.count() == 1
+            Beer.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(brewery)
+            controller.delete(beer)
 
         then:"The instance is deleted"
-            Brewery.count() == 0
-            response.redirectedUrl == '/brewery/index'
+            Beer.count() == 0
+            response.redirectedUrl == '/beer/index'
             flash.message != null
     }
 }

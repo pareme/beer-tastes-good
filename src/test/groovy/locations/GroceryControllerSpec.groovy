@@ -1,11 +1,11 @@
-package breweries
+package locations
 
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(AddressController)
-@Mock(Address)
-class AddressControllerSpec extends Specification {
+@TestFor(GroceryController)
+@Mock(Grocery)
+class GroceryControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -21,8 +21,8 @@ class AddressControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.addressList
-            model.addressCount == 0
+            !model.groceryList
+            model.groceryCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -30,7 +30,7 @@ class AddressControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.address!= null
+            model.grocery!= null
     }
 
     void "Test the save action correctly persists an instance"() {
@@ -38,25 +38,25 @@ class AddressControllerSpec extends Specification {
         when:"The save action is executed with an invalid instance"
             request.contentType = FORM_CONTENT_TYPE
             request.method = 'POST'
-            def address = new Address()
-            address.validate()
-            controller.save(address)
+            def grocery = new Grocery()
+            grocery.validate()
+            controller.save(grocery)
 
         then:"The create view is rendered again with the correct model"
-            model.address!= null
+            model.grocery!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            address = new Address(params)
+            grocery = new Grocery(params)
 
-            controller.save(address)
+            controller.save(grocery)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/address/show/1'
+            response.redirectedUrl == '/grocery/show/1'
             controller.flash.message != null
-            Address.count() == 1
+            Grocery.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -68,11 +68,11 @@ class AddressControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def address = new Address(params)
-            controller.show(address)
+            def grocery = new Grocery(params)
+            controller.show(grocery)
 
         then:"A model is populated containing the domain instance"
-            model.address == address
+            model.grocery == grocery
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -84,11 +84,11 @@ class AddressControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def address = new Address(params)
-            controller.edit(address)
+            def grocery = new Grocery(params)
+            controller.edit(grocery)
 
         then:"A model is populated containing the domain instance"
-            model.address == address
+            model.grocery == grocery
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -98,28 +98,28 @@ class AddressControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/address/index'
+            response.redirectedUrl == '/grocery/index'
             flash.message != null
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def address = new Address()
-            address.validate()
-            controller.update(address)
+            def grocery = new Grocery()
+            grocery.validate()
+            controller.update(grocery)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.address == address
+            model.grocery == grocery
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            address = new Address(params).save(flush: true)
-            controller.update(address)
+            grocery = new Grocery(params).save(flush: true)
+            controller.update(grocery)
 
         then:"A redirect is issued to the show action"
-            address != null
-            response.redirectedUrl == "/address/show/$address.id"
+            grocery != null
+            response.redirectedUrl == "/grocery/show/$grocery.id"
             flash.message != null
     }
 
@@ -130,23 +130,23 @@ class AddressControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/address/index'
+            response.redirectedUrl == '/grocery/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def address = new Address(params).save(flush: true)
+            def grocery = new Grocery(params).save(flush: true)
 
         then:"It exists"
-            Address.count() == 1
+            Grocery.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(address)
+            controller.delete(grocery)
 
         then:"The instance is deleted"
-            Address.count() == 0
-            response.redirectedUrl == '/address/index'
+            Grocery.count() == 0
+            response.redirectedUrl == '/grocery/index'
             flash.message != null
     }
 }

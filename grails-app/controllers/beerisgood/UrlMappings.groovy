@@ -1,4 +1,4 @@
-package firstgrailsapp
+package beerisgood
 
 class UrlMappings {
 

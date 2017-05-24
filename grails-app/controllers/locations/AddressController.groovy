@@ -1,4 +1,6 @@
-package breweries
+package locations
+
+import locations.Address
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional

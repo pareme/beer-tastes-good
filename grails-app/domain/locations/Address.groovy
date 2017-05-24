@@ -1,11 +1,11 @@
-package breweries
+package locations
 
 class Address {
     String streetAddress
     String city
     String state
     String zipCode
-    Brewery brewery
+    Location location
 
     static constraints = {
         streetAddress blank: false
