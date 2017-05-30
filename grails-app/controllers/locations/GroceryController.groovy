@@ -4,91 +4,91 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
-class GroceryController {
+class GrocerController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Grocery.list(params), model:[groceryCount: Grocery.count()]
+        respond Grocer.list(params), model:[grocerCount: Grocer.count()]
     }
 
-    def show(Grocery grocery) {
-        respond grocery
+    def show(Grocer grocer) {
+        respond grocer
     }
 
     def create() {
-        respond new Grocery(params)
+        respond new Grocer(params)
     }
 
     @Transactional
-    def save(Grocery grocery) {
-        if (grocery == null) {
+    def save(Grocer grocer) {
+        if (grocer == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (grocery.hasErrors()) {
+        if (grocer.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond grocery.errors, view:'create'
+            respond grocer.errors, view:'create'
             return
         }
 
-        grocery.save flush:true
+        grocer.save flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'grocery.label', default: 'Grocery'), grocery.id])
-                redirect grocery
+                flash.message = message(code: 'default.created.message', args: [message(code: 'grocer.label', default: 'Grocer'), grocer.id])
+                redirect grocer
             }
-            '*' { respond grocery, [status: CREATED] }
+            '*' { respond grocer, [status: CREATED] }
         }
     }
 
-    def edit(Grocery grocery) {
-        respond grocery
+    def edit(Grocer grocer) {
+        respond grocer
     }
 
     @Transactional
-    def update(Grocery grocery) {
-        if (grocery == null) {
+    def update(Grocer grocer) {
+        if (grocer == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (grocery.hasErrors()) {
+        if (grocer.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond grocery.errors, view:'edit'
+            respond grocer.errors, view:'edit'
             return
         }
 
-        grocery.save flush:true
+        grocer.save flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'grocery.label', default: 'Grocery'), grocery.id])
-                redirect grocery
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'grocer.label', default: 'Grocer'), grocer.id])
+                redirect grocer
             }
-            '*'{ respond grocery, [status: OK] }
+            '*'{ respond grocer, [status: OK] }
         }
     }
 
     @Transactional
-    def delete(Grocery grocery) {
+    def delete(Grocer grocer) {
 
-        if (grocery == null) {
+        if (grocer == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        grocery.delete flush:true
+        grocer.delete flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'grocery.label', default: 'Grocery'), grocery.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'grocer.label', default: 'Grocer'), grocer.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -98,7 +98,7 @@ class GroceryController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'grocery.label', default: 'Grocery'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'grocer.label', default: 'Grocer'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

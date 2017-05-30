@@ -3,9 +3,9 @@ package locations
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(GroceryController)
-@Mock(Grocery)
-class GroceryControllerSpec extends Specification {
+@TestFor(GrocerController)
+@Mock(Grocer)
+class GrocerControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -21,8 +21,8 @@ class GroceryControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.groceryList
-            model.groceryCount == 0
+            !model.grocerList
+            model.grocerCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -30,7 +30,7 @@ class GroceryControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.grocery!= null
+            model.grocer!= null
     }
 
     void "Test the save action correctly persists an instance"() {
@@ -38,25 +38,25 @@ class GroceryControllerSpec extends Specification {
         when:"The save action is executed with an invalid instance"
             request.contentType = FORM_CONTENT_TYPE
             request.method = 'POST'
-            def grocery = new Grocery()
-            grocery.validate()
-            controller.save(grocery)
+            def grocer = new Grocer()
+            grocer.validate()
+            controller.save(grocer)
 
         then:"The create view is rendered again with the correct model"
-            model.grocery!= null
+            model.grocer!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            grocery = new Grocery(params)
+            grocer = new Grocer(params)
 
-            controller.save(grocery)
+            controller.save(grocer)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/grocery/show/1'
+            response.redirectedUrl == '/grocer/show/1'
             controller.flash.message != null
-            Grocery.count() == 1
+            Grocer.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -68,11 +68,11 @@ class GroceryControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def grocery = new Grocery(params)
-            controller.show(grocery)
+            def grocer = new Grocer(params)
+            controller.show(grocer)
 
         then:"A model is populated containing the domain instance"
-            model.grocery == grocery
+            model.grocer == grocer
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -84,11 +84,11 @@ class GroceryControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def grocery = new Grocery(params)
-            controller.edit(grocery)
+            def grocer = new Grocer(params)
+            controller.edit(grocer)
 
         then:"A model is populated containing the domain instance"
-            model.grocery == grocery
+            model.grocer == grocer
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -98,28 +98,28 @@ class GroceryControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/grocery/index'
+            response.redirectedUrl == '/grocer/index'
             flash.message != null
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def grocery = new Grocery()
-            grocery.validate()
-            controller.update(grocery)
+            def grocer = new Grocer()
+            grocer.validate()
+            controller.update(grocer)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.grocery == grocery
+            model.grocer == grocer
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            grocery = new Grocery(params).save(flush: true)
-            controller.update(grocery)
+            grocer = new Grocer(params).save(flush: true)
+            controller.update(grocer)
 
         then:"A redirect is issued to the show action"
-            grocery != null
-            response.redirectedUrl == "/grocery/show/$grocery.id"
+            grocer != null
+            response.redirectedUrl == "/grocer/show/$grocer.id"
             flash.message != null
     }
 
@@ -130,23 +130,23 @@ class GroceryControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/grocery/index'
+            response.redirectedUrl == '/grocer/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def grocery = new Grocery(params).save(flush: true)
+            def grocer = new Grocer(params).save(flush: true)
 
         then:"It exists"
-            Grocery.count() == 1
+            Grocer.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(grocery)
+            controller.delete(grocer)
 
         then:"The instance is deleted"
-            Grocery.count() == 0
-            response.redirectedUrl == '/grocery/index'
+            Grocer.count() == 0
+            response.redirectedUrl == '/grocer/index'
             flash.message != null
     }
 }

@@ -8,6 +8,6 @@ class Brewery extends Location {
     static hasMany = [beer: Beer]
 
     static constraints = {
-        name unique = true
+        name unique: true
     }
 }

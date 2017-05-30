@@ -13,7 +13,8 @@
             <div class="message" role="status">${flash.message}</div>
         </g:if>
 
-        <p>There are ${breweryTotal} beer in the database.</p>
+        <p>There are ${breweryTotal} breweries in the database.</p>
+        <p>There are ${grocerTotal} grocer(s) in the database.</p>
 
         <ul>
             <g:each in="${breweryList}" var="brewery">
@@ -30,6 +31,16 @@
                             </g:link>
                         </g:each>
                     </ul>
+                </li>
+            </g:each>
+        </ul>
+
+        <ul>
+            <g:each in="${grocerList}" var="grocer">
+                <li>
+                    <g:link controller="grocer" action="show" id="${grocer.id}">
+                        ${grocer.name} - ${grocer.address.toString()}
+                    </g:link>
                 </li>
             </g:each>
         </ul>
