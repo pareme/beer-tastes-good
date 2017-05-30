@@ -1,14 +1,14 @@
 package locations
 
-import beer.GetGeolocationService
+import beer.GeoLocationService
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
-@TestFor(GetGeolocationService)
-class GetGeolocationServiceSpec extends Specification {
+@TestFor(GeoLocationService)
+class GeoLocationServiceSpec extends Specification {
 
     def setup() {
     }

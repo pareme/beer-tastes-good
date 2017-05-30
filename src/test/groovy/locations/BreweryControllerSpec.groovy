@@ -1,5 +1,6 @@
 package locations
 
+import beer.Beer
 import grails.test.mixin.*
 import spock.lang.*
 
@@ -10,9 +11,9 @@ class BreweryControllerSpec extends Specification {
     def populateValidParams(params) {
         assert params != null
 
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
-        assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
+        params['name'] = 'fill'
+        params['address'] = new Address(streetAddress: 'fill', city: 'fill', state: 'VA', zipCode: 23226)
+        params['beer'] = new Beer('')
     }
 
     void "Test the index action returns the correct model"() {

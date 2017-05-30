@@ -1,12 +1,12 @@
 package locations
 
-import locations.Brewery
+import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class BreweryController {
+    def geoLocationService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -30,6 +30,15 @@ class BreweryController {
             notFound()
             return
         }
+
+//        def results = [:]
+//        if(brewery.address == null) {
+//            results = geoLocationService.getGeoLocationFromName(brewery.name)
+//        } else {
+//            results = geoLocationService.getGeoLocationFromAddress(brewery.address)
+//        }
+
+
 
         if (brewery.hasErrors()) {
             transactionStatus.setRollbackOnly()

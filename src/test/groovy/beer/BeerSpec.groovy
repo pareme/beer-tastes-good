@@ -79,10 +79,11 @@ class BeerSpec extends Specification {
 
     void 'Test valid Beer'() {
         when: 'the type is anything but null or blank'
-        beer = new Beer(name: "Tasty Beer Yum", beerStyle: 'fill', beerType: 'fill',
-                brewery: new Brewery(name: 'fill',
+        Brewery brewery = new Brewery(name: 'fill',
                         address: new Address(streetAddress: "fill", city: "fill",
-                                state: "VA", zipCode: 23226)))
+                                state: "VA", zipCode: 23226))
+        beer = new Beer(name: "Tasty Beer Yum", style: 'fill', type: 'fill',
+                brewery: brewery)
 
         then: 'validation should pass'
         beer.validate()

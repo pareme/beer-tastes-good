@@ -1,4 +1,8 @@
 ---
+apikeys:
+    google:
+        maps:
+---
 grails:
     profile: web
     codegen:
