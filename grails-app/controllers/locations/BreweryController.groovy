@@ -1,21 +1,26 @@
 package locations
 
+import beer.GeoLocationService
 import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
 class BreweryController {
-    def geoLocationService
+    GeoLocationService geoLocationService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Brewery.list(params), model:[breweryCount: Brewery.count()]
+        respond Brewery.list(params), model: [breweryCount: Brewery.count()]
     }
 
     def show(Brewery brewery) {
+        if (brewery.lng == null) {
+            brewery = geoLocationService.getGeoLocationFromAddress(brewery)
+            brewery.save()
+        }
         respond brewery
     }
 
@@ -39,14 +44,13 @@ class BreweryController {
 //        }
 
 
-
         if (brewery.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond brewery.errors, view:'create'
+            respond brewery.errors, view: 'create'
             return
         }
 
-        brewery.save flush:true
+        brewery.save flush: true
 
         request.withFormat {
             form multipartForm {
@@ -71,18 +75,18 @@ class BreweryController {
 
         if (brewery.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond brewery.errors, view:'edit'
+            respond brewery.errors, view: 'edit'
             return
         }
 
-        brewery.save flush:true
+        brewery.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'brewery.label', default: 'Brewery'), brewery.id])
                 redirect brewery
             }
-            '*'{ respond brewery, [status: OK] }
+            '*' { respond brewery, [status: OK] }
         }
     }
 
@@ -95,14 +99,14 @@ class BreweryController {
             return
         }
 
-        brewery.delete flush:true
+        brewery.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'brewery.label', default: 'Brewery'), brewery.id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -112,7 +116,7 @@ class BreweryController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'brewery.label', default: 'Brewery'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

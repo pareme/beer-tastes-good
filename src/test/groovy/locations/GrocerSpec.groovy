@@ -9,14 +9,8 @@ import spock.lang.Specification
 @TestFor(Grocer)
 class GrocerSpec extends Specification {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
+//    void "test something"() {
+//        expect:"fix me"
+//            true == false
+//    }
 }

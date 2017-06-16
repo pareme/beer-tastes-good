@@ -10,9 +10,10 @@ class GrocerControllerSpec extends Specification {
     def populateValidParams(params) {
         assert params != null
 
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
-        assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
+        params['name'] = 'fill'
+        params['lng'] = 232.232
+        params['lat'] = 232.232
+        params['address'] = new Address(streetAddress: 'fill', city: 'fill', state: 'VA', zipCode: 23226)
     }
 
     void "Test the index action returns the correct model"() {

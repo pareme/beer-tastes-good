@@ -123,7 +123,7 @@ class BeerControllerSpec extends Specification {
 
         then:'A redirect is issued to the show action'
             beer != null
-            response.redirectedUrl == "beer/show/$beer.id"
+            response.redirectedUrl == "/beer/show/$beer.id"
             flash.message != null
     }
 

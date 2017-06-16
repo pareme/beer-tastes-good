@@ -1,7 +1,12 @@
 ---
 apikeys:
     google:
+        maps: AIzaSyDnN-S05ieYO1w2Na2fltMvGLLIAyzqWZo
+
+endpoint:
+    google:
         maps:
+            address: https://maps.googleapis.com/maps/api/geocode/json
 ---
 grails:
     profile: web

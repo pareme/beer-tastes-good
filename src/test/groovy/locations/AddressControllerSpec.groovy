@@ -11,9 +11,11 @@ class AddressControllerSpec extends Specification {
     def populateValidParams(params) {
         assert params != null
 
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
-        assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
+        params['streetAddress'] = '12345 Street'
+        params['city'] = 'Richmond'
+        params['state'] = 'VA'
+        params['zipCode'] = '23226'
+        params['location'] = new Location(name: 'name', lng: 232.232, lat: 232.232)
     }
 
     void "Test the index action returns the correct model"() {
@@ -55,7 +57,7 @@ class AddressControllerSpec extends Specification {
             controller.save(address)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/address/show/1'
+            response.redirectedUrl == "/address/show/1"
             controller.flash.message != null
             Address.count() == 1
     }
@@ -147,7 +149,7 @@ class AddressControllerSpec extends Specification {
 
         then:"The instance is deleted"
             Address.count() == 0
-            response.redirectedUrl == '/address/index'
+            response.redirectedUrl == "/address/index"
             flash.message != null
     }
 }

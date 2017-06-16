@@ -2,6 +2,7 @@ package locations
 
 import beer.GeoLocationService
 import grails.test.mixin.TestFor
+import spock.lang.Ignore
 import spock.lang.Specification
 
 /**
@@ -9,15 +10,19 @@ import spock.lang.Specification
  */
 @TestFor(GeoLocationService)
 class GeoLocationServiceSpec extends Specification {
+    def geoLocationService
+    def brewery = new Brewery(name: 'The Veil Brewing Co.', address: new Address(streetAddress: '1301 Roseneath Rd', city: 'Richmond', state: 'VA', zipCode: '23230'))
 
-    def setup() {
-    }
+    @Ignore
+    void "Integration Test for veil"() {
+        setup:
+        geoLocationService = new GeoLocationService()
 
-    def cleanup() {
-    }
+        when:
+        brewery = geoLocationService.getGeoLocationFromAddress(brewery)
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
+        then:
+        brewery.lat == 37.568317
+        brewery.lng == -77.47534139999999
     }
 }

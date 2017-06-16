@@ -3,8 +3,8 @@ package locations
 class Location {
 
     String name
-    String lat
-    String lon
+    Double lat
+    Double lng
 
     static hasOne = [address: Address]
 

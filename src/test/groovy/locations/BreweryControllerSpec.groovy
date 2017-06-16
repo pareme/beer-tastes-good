@@ -1,8 +1,8 @@
 package locations
 
-import beer.Beer
-import grails.test.mixin.*
-import spock.lang.*
+import grails.test.mixin.Mock
+import grails.test.mixin.TestFor
+import spock.lang.Specification
 
 @TestFor(BreweryController)
 @Mock(Brewery)
@@ -12,8 +12,9 @@ class BreweryControllerSpec extends Specification {
         assert params != null
 
         params['name'] = 'fill'
+        params['lng'] = 232.232
+        params['lat'] = 232.232
         params['address'] = new Address(streetAddress: 'fill', city: 'fill', state: 'VA', zipCode: 23226)
-        params['beer'] = new Beer('')
     }
 
     void "Test the index action returns the correct model"() {
@@ -131,7 +132,7 @@ class BreweryControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/brewery/index'
+            response.redirectedUrl == "/brewery/index"
             flash.message != null
 
         when:"A domain instance is created"
@@ -147,7 +148,7 @@ class BreweryControllerSpec extends Specification {
 
         then:"The instance is deleted"
             Brewery.count() == 0
-            response.redirectedUrl == '/brewery/index'
+            response.redirectedUrl == "/brewery/index"
             flash.message != null
     }
 }
